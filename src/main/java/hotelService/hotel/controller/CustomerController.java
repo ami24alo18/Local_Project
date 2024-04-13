@@ -35,7 +35,7 @@ public class CustomerController {
 
     @GetMapping("/number")
     public CustomerDetails getDetailsByNumber(@RequestParam int number) {
-        log.info("Welcome to get data! ");
+        log.info("Welcome to get customer data by number! ");
         CustomerDetails customerDetails = persistData.getCustomerDetails(number);
         return customerDetails;
     }
