@@ -1,16 +1,23 @@
 package hotelService.hotel.service;
 
 import hotelService.hotel.Response.PostResponse;
+import hotelService.hotel.Response.RoomResponse;
 import hotelService.hotel.entity.CustomerDetails;
+import hotelService.hotel.entity.RoomStatus;
 import hotelService.hotel.model.CustomerDetailsDto;
 import hotelService.hotel.model.UpdateRepoDto;
 import hotelService.hotel.repository.CustomerDetailsRepository;
+import hotelService.hotel.repository.RoomAvailabilityDetailsRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Component
@@ -18,6 +25,9 @@ public class PersistData {
 
     @Autowired
     private CustomerDetailsRepository customerDetailsRepository;
+
+    @Autowired
+    private RoomAvailabilityDetailsRepository roomAvailabilityDetailsRepository;
 
 
     public PostResponse saveCustomerDetails(CustomerDetailsDto customerDetailsDto) {
@@ -79,5 +89,16 @@ public class PersistData {
             log.error("Exception while saving customer: ", e);
             return new PostResponse("Data update failure! ", false);
         }
+    }
+
+    public RoomResponse avilableRooms(boolean isAvailable) {
+
+        List<Integer> rooms = roomAvailabilityDetailsRepository.getAvailableRooms(isAvailable);
+
+        RoomResponse response = new RoomResponse();
+        response.setAvailableRooms(rooms);
+        response.setNumberOfRooms(rooms.size());
+
+        return response;
     }
 }

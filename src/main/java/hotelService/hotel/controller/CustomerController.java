@@ -1,7 +1,9 @@
 package hotelService.hotel.controller;
 
 import hotelService.hotel.Response.PostResponse;
+import hotelService.hotel.Response.RoomResponse;
 import hotelService.hotel.entity.CustomerDetails;
+import hotelService.hotel.entity.RoomStatus;
 import hotelService.hotel.model.CustomerDetailsDto;
 import hotelService.hotel.model.UpdateRepoDto;
 import hotelService.hotel.service.PersistData;
@@ -9,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -45,5 +47,12 @@ public class CustomerController {
         log.info("Welcome to update data! ");
         PostResponse response = persistData.updateCustomerDetails(updateRepoDto);
         return response;
+    }
+
+    @GetMapping("/available")
+    public RoomResponse availableRooms(@RequestParam boolean isAvailable) {
+        log.info("Welcome available rooms! ");
+        RoomResponse roomStatuses = persistData.avilableRooms(isAvailable);
+        return roomStatuses;
     }
 }
