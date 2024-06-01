@@ -1,12 +1,7 @@
 package hotelService.hotel.entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -37,8 +32,8 @@ public class CustomerDetails {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "number")
-    private int number;
+    @Column(name = "room_no", nullable = false)
+    private Integer roomNo;
 
     @Column(name = "mobile_no")
     private String mobileNo;

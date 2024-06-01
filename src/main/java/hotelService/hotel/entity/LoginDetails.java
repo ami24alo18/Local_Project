@@ -1,5 +1,6 @@
 package hotelService.hotel.entity;
 
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,19 +15,16 @@ import org.springframework.data.relational.core.mapping.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "room_details")
-public class RoomStatus {
+@Table(name = "login_details")
+public class LoginDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "room_no")
-    private int room_no;
+    @Column(name = "username")
+    private String userName;
 
-    @Column(name = "availability")
-    private boolean availability;
-
-    @Column(name = "type")
-    private String type;
+    @Column(name = "password")
+    private String password;
 }
