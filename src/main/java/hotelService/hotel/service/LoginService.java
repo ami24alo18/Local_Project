@@ -33,9 +33,14 @@ public class LoginService {
 
     public Boolean matchCredentials(CredentialsDto credentialsDto) {
         LoginDetails loginDetails = loginCredentialsRepository.getLoginDetailsByUserName(credentialsDto.getUserName());
-        if(isEmpty(loginDetails)){
+        if (isEmpty(loginDetails)) {
             return false;
         }
         return Objects.equals(loginDetails.getUserName(), credentialsDto.getUserName()) && Objects.equals(loginDetails.getPassword(), credentialsDto.getPassword());
+    }
+
+    public LoginDetails getLoginDetails(String userName){
+        LoginDetails loginDetails = loginCredentialsRepository.getLoginDetailsByUserId(userName);
+        return loginDetails;
     }
 }

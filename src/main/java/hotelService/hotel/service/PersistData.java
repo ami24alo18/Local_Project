@@ -41,8 +41,8 @@ public class PersistData {
             customerDetails.setLogIn(customerDetailsDto.getLog_in() != null ? customerDetailsDto.getLog_in() : LocalDateTime.now());
             customerDetails.setLogOut(customerDetailsDto.getLog_out());
 
-            int isTrue = roomAvailabilityDetailsRepository.getRoomStatus(customerDetails.getRoomNo());
-            if (isTrue==1){
+            boolean isTrue = roomAvailabilityDetailsRepository.getRoomStatus(customerDetails.getRoomNo());
+            if (isTrue){
                 roomAvailabilityDetailsRepository.updateRoomStatus(customerDetailsDto.getRoomNo());
             }
             else {

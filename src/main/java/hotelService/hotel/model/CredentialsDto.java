@@ -11,6 +11,9 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CredentialsDto {
+
+    @NonNull
+    private String userId;
     @NotNull
     private String userName;
     @NonNull

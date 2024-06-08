@@ -20,5 +20,5 @@ public interface RoomAvailabilityDetailsRepository extends JpaRepository<RoomDet
     void updateRoomStatus(@Param("roomNo") Integer roomNo);
 
     @Query(value = "SELECT availability FROM customer.room_details WHERE room_no = :roomNo", nativeQuery = true)
-    int getRoomStatus(@Param("roomNo") Integer roomNo);
+    boolean getRoomStatus(@Param("roomNo") Integer roomNo);
 }

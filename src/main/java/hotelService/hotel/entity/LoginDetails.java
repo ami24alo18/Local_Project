@@ -22,6 +22,9 @@ public class LoginDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "user_id")
+    private String userId;
+
     @Column(name = "username")
     private String userName;
 

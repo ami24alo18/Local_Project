@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface LoginCredentialsRepository extends JpaRepository<LoginDetails, Integer> {
 
     LoginDetails getLoginDetailsByUserName(String userName);
+
+    LoginDetails getLoginDetailsByUserId(String user_id);
 }
