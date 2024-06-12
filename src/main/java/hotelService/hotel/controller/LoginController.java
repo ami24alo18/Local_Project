@@ -1,11 +1,15 @@
 package hotelService.hotel.controller;
 
 
+import hotelService.hotel.Autherization.Autherization;
 import hotelService.hotel.Response.PostResponse;
 import hotelService.hotel.model.CredentialsDto;
 import hotelService.hotel.service.LoginService;
+import hotelService.hotel.utils.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -13,7 +17,13 @@ import org.springframework.web.bind.annotation.*;
 public class LoginController {
 
     @Autowired
-    LoginService loginService;
+    private LoginService loginService;
+
+    @Autowired
+    private Autherization autherization;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @PostMapping("/addCredentials")
     public String addCredentials(@RequestBody CredentialsDto credentialsDto){
@@ -28,11 +38,14 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public PostResponse matchCredentials(@RequestBody CredentialsDto credentialsDto){
+    public ResponseEntity<?> matchCredentials(@RequestBody CredentialsDto credentialsDto){
+
+
         if(loginService.matchCredentials(credentialsDto)){
             log.info("Credential match!");
-            return new PostResponse("Credentials matched successfully", true);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
-        return new PostResponse("Invalid userName or password", false);
+        String jwt = jwtUtil.generateToken(credentialsDto.getUserName());
+        return ResponseEntity.ok(jwt);
     }
 }

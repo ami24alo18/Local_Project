@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class CustomerDetailsDto {
 
+    private String user_id;
     private String name;
     private String email;
     @NonNull
