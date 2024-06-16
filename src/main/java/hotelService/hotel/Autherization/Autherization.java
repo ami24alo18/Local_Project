@@ -12,7 +12,7 @@ public class Autherization {
     @Autowired
     private EncryptDecrypt encryptDecrypt;
 
-    public String isRequestAutherized(String authToken) {
+    public String isRequestAuthorized(String authToken) {
         if (authToken == null || authToken.isEmpty()) {
             return null;
         }
