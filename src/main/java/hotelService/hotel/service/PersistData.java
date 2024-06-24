@@ -1,10 +1,14 @@
 package hotelService.hotel.service;
 
 import hotelService.hotel.Response.PostResponse;
+import hotelService.hotel.Response.RoomResponse;
 import hotelService.hotel.entity.CustomerDetails;
+import hotelService.hotel.entity.RoomDetails;
 import hotelService.hotel.model.CustomerDetailsDto;
 import hotelService.hotel.model.UpdateRepoDto;
 import hotelService.hotel.repository.CustomerDetailsRepository;
+import hotelService.hotel.repository.RoomAvailabilityDetailsRepository;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -19,19 +23,32 @@ public class PersistData {
     @Autowired
     private CustomerDetailsRepository customerDetailsRepository;
 
+    @Autowired
+    private RoomAvailabilityDetailsRepository roomAvailabilityDetailsRepository;
 
-    public PostResponse saveCustomerDetails(CustomerDetailsDto customerDetailsDto) {
+
+    @Transactional
+    public PostResponse saveCustomerDetails(CustomerDetailsDto customerDetailsDto, String userId) {
         log.info("Data posting process initiated! ");
         try {
             CustomerDetails customerDetails = new CustomerDetails();
+            customerDetails.setUserId(userId);
             customerDetails.setName(customerDetailsDto.getName());
             customerDetails.setEmail(customerDetailsDto.getEmail());
-            customerDetails.setNumber(customerDetailsDto.getNumber());
             customerDetails.setAadhaarNo(customerDetailsDto.getAadhaarNo());
             customerDetails.setMobileNo(customerDetailsDto.getMobileNo());
+            customerDetails.setRoomNo(customerDetailsDto.getRoomNo());
             customerDetails.setLogIn(customerDetailsDto.getLog_in() != null ? customerDetailsDto.getLog_in() : LocalDateTime.now());
             customerDetails.setLogOut(customerDetailsDto.getLog_out());
-            customerDetailsRepository.save(customerDetails);
+
+            RoomDetails roomStatus = roomAvailabilityDetailsRepository.getRoomStatus(customerDetailsDto.getRoomNo());
+            if (roomStatus != null && roomStatus.getAvailability()) {
+                customerDetailsRepository.save(customerDetails);
+                roomAvailabilityDetailsRepository.updateRoomStatus(customerDetailsDto.getRoomNo());
+            } else {
+                log.info("Room No. :" + customerDetailsDto.getRoomNo() + " Not Available");
+                return new PostResponse("Data Could not be persisted due to room not available! ", false);
+            }
             return new PostResponse("Data successfully persisted in db: ", true);
         } catch (Exception e) {
             log.error("Exception while saving customer: ", e);
@@ -79,5 +96,16 @@ public class PersistData {
             log.error("Exception while saving customer: ", e);
             return new PostResponse("Data update failure! ", false);
         }
+    }
+
+    public RoomResponse avilableRooms(boolean isAvailable) {
+
+        List<Integer> rooms = roomAvailabilityDetailsRepository.getAvailableRooms(isAvailable);
+
+        RoomResponse response = new RoomResponse();
+        response.setAvailableRooms(rooms);
+        response.setNumberOfRooms(rooms.size());
+
+        return response;
     }
 }
