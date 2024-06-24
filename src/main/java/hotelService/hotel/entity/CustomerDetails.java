@@ -23,6 +23,9 @@ public class CustomerDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "user_id")
+    private String userId;
+
     @Column(name = "name")
     private String name;
 

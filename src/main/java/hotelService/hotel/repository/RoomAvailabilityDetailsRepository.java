@@ -19,6 +19,6 @@ public interface RoomAvailabilityDetailsRepository extends JpaRepository<RoomDet
     @Query(value = "UPDATE customer.room_details SET availability = false WHERE room_no = :roomNo", nativeQuery = true)
     void updateRoomStatus(@Param("roomNo") Integer roomNo);
 
-    @Query(value = "SELECT availability FROM customer.room_details WHERE room_no = :roomNo", nativeQuery = true)
-    boolean getRoomStatus(@Param("roomNo") Integer roomNo);
+    @Query(value = "SELECT * FROM customer.room_details WHERE room_no = :roomNo", nativeQuery = true)
+    RoomDetails getRoomStatus(@Param("roomNo") Integer roomNo);
 }

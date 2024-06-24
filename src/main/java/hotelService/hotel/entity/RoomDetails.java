@@ -21,10 +21,10 @@ public class RoomDetails {
     private Integer id;
 
     @Column(name = "room_no")
-    private int room_no;
+    private Integer room_no;
 
     @Column(name = "availability")
-    private boolean availability;
+    private Boolean availability;
 
     @Column(name = "type")
     private String type;

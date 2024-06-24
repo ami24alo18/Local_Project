@@ -40,7 +40,7 @@ public class LoginController {
     public AuthenticationResponse matchCredentials(@RequestBody CredentialsDto credentialsDto){
         log.info("Customer logging and validation");
         if(!loginService.matchCredentials(credentialsDto)){
-            log.info("Credential match!");
+            log.info("Credential not matched!");
             return new AuthenticationResponse("Invalid credentials", false, null);
         }
         String jwt = jwtUtil.generateToken(credentialsDto.getUserName());
