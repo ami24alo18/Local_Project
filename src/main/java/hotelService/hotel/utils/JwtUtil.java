@@ -1,5 +1,6 @@
 package hotelService.hotel.utils;
 
+import hotelService.hotel.constant.HSAConstant;
 import hotelService.hotel.entity.LoginDetails;
 import hotelService.hotel.repository.LoginCredentialsRepository;
 import io.jsonwebtoken.Claims;
@@ -17,8 +18,6 @@ import java.util.function.Function;
 
 @Component
 public class JwtUtil {
-
-    private String SECRET_KEY = "GAF7uWpTx7n+E0yHqodPkW7AdVmQRFSE";
 
     @Autowired
     private LoginCredentialsRepository loginCredRepo;
@@ -67,7 +66,7 @@ public class JwtUtil {
     }
 
     private Claims extratAllClaims(String token) {
-        return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+        return Jwts.parser().setSigningKey(HSAConstant.SECRET_KEY).parseClaimsJws(token).getBody();
     }
 
     private Boolean isTokenExpired(String token) {
@@ -84,7 +83,7 @@ public class JwtUtil {
                 .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
-                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
+                .signWith(SignatureAlgorithm.HS256, HSAConstant.SECRET_KEY)
                 .compact();
     }
 

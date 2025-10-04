@@ -1,8 +1,8 @@
 package hotelService.hotel.controller;
 
-import hotelService.hotel.Autherization.Autherization;
 import hotelService.hotel.Response.PostResponse;
 import hotelService.hotel.Response.RoomResponse;
+import hotelService.hotel.authorization.Autherization;
 import hotelService.hotel.entity.CustomerDetails;
 import hotelService.hotel.model.CustomerDetailsDto;
 import hotelService.hotel.model.UpdateRepoDto;
@@ -10,12 +10,11 @@ import hotelService.hotel.repository.LoginCredentialsRepository;
 import hotelService.hotel.service.JwtService;
 import hotelService.hotel.service.PersistData;
 import hotelService.hotel.utils.JwtUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import jakarta.servlet.http.HttpServletRequest;
 
 @Slf4j
 @RestController
@@ -37,7 +36,7 @@ public class CustomerController {
     private JwtUtil jwtUtil;
 
 
-    @PostMapping("/postCustomerDetails")
+    @PostMapping("/addCustomerDetails")
     public PostResponse postCustomerDetails(@RequestBody CustomerDetailsDto customerDetailsDto, @Autowired HttpServletRequest request) {
         String authorizationToken = request.getHeader("Authorization");
         String userId = jwtUtil.isAuthorized(authorizationToken);
@@ -50,7 +49,7 @@ public class CustomerController {
         return response;
     }
 
-    @GetMapping("/customerDetails")
+    @GetMapping("/getCustomerDetails")
     public ResponseEntity<?> getCustomerDetails(@RequestParam String name, @Autowired HttpServletRequest request) {
         log.info("Welcome to get data! ");
         String authorizationToken = request.getHeader("Authorization");
@@ -76,7 +75,7 @@ public class CustomerController {
         return response;
     }
 
-    @GetMapping("/available")
+    @GetMapping("/availableRooms")
     public RoomResponse availableRooms(@RequestParam boolean isAvailable) {
         log.info("Welcome available rooms! ");
         RoomResponse roomStatuses = persistData.avilableRooms(isAvailable);

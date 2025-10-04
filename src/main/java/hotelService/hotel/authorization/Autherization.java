@@ -1,4 +1,4 @@
-package hotelService.hotel.Autherization;
+package hotelService.hotel.authorization;
 
 import hotelService.hotel.service.EncryptDecrypt;
 import lombok.extern.slf4j.Slf4j;

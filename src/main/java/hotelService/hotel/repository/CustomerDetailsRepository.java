@@ -14,6 +14,6 @@ public interface CustomerDetailsRepository extends JpaRepository<CustomerDetails
     @Query(value = "SELECT * FROM customer.customer_details WHERE name = :name order by id desc;", nativeQuery = true)
     List<CustomerDetails> getCustomerDetailsByName(@Param("name") String name);
 
-    @Query(value = "SELECT * FROM customer.customer_details WHERE number = :number order by id desc limit 1", nativeQuery = true)
+    @Query(value = "SELECT * FROM customer.customer_details WHERE room_no = :number order by id desc limit 1", nativeQuery = true)
     CustomerDetails getCustomerDetailsByNumber(@Param("number") int number);
 }

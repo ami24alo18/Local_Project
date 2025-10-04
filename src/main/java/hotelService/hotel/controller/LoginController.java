@@ -1,7 +1,7 @@
 package hotelService.hotel.controller;
 
 
-import hotelService.hotel.Autherization.Autherization;
+import hotelService.hotel.authorization.Autherization;
 import hotelService.hotel.Response.AuthenticationResponse;
 import hotelService.hotel.Response.PostResponse;
 import hotelService.hotel.model.CredentialsDto;
